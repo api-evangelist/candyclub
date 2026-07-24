@@ -1,0 +1,52 @@
+generated: '2026-07-18'
+method: searched
+source: https://candyclub.com/llms.txt
+summary: >-
+  Cross-cutting agent-commerce conventions for the CandyClub Shopify storefront,
+  as documented in /llms.txt and the UCP profile. CandyClub does not publish a
+  first-party developer API; these conventions govern agent (LLM / personal
+  shopper) interaction with the storefront and the UCP MCP endpoint.
+authentication:
+  style: oauth2-oidc
+  detail: >-
+    Read-only browsing needs no authentication. Transacting on behalf of a
+    customer uses Shopify Customer Account OIDC (authorization-code + PKCE).
+  ref: authentication/candyclub-authentication.yml
+buyer_approval:
+  required: true
+  detail: >-
+    Checkout must not be completed without explicit, contemporaneous buyer
+    consent at the moment of payment. Agents that cannot obtain live approval
+    should route payment through the Shop skill (https://shop.app/SKILL.md) /
+    Shop Pay instead.
+rate_limiting:
+  signal: http-429
+  detail: The UCP MCP endpoint is rate-limited per IP; agents must back off on 429 responses.
+buyer_context:
+  detail: Pass context.address_country and context.currency for accurate pricing and availability.
+  params: [address_country, currency]
+read_only_browsing:
+  auth_required: false
+  endpoints:
+    - 'GET /collections/all'
+    - 'GET /products/{handle}'
+    - 'GET /products/{handle}.json'
+    - 'GET /collections/{handle}'
+    - 'GET /collections/{handle}/products.json'
+    - 'GET /search?q={query}&type=product'
+    - 'GET /sitemap.xml'
+agent_flow:
+  - discover: 'GET /.well-known/ucp'
+  - search: search_catalog
+  - cart: create_cart
+  - checkout: create_checkout
+  - fulfill: update_checkout
+  - complete: complete_checkout
+idempotency:
+  supported: false
+  detail: No idempotency-key contract is documented for the storefront or UCP endpoint.
+cross_links:
+  authentication: authentication/candyclub-authentication.yml
+  scopes: scopes/candyclub-scopes.yml
+  mcp: mcp/candyclub-mcp.yml
+  well_known: well-known/candyclub-well-known.yml

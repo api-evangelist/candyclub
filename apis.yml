@@ -1,8 +1,30 @@
 aid: candyclub
 name: CandyClub
-description: CandyClub is a company surfaced as a portfolio company of 500-global and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  CandyClub is a premium candy and confectionery brand founded in 2015, best known
+  for its direct-to-consumer candy subscription boxes and its wholesale program that
+  supplies curated specialty candies to boutique shops, hotels, resorts, and national
+  retailers. The candyclub.com storefront runs on Shopify and is agent-commerce ready:
+  it publishes an llms.txt agent guide, Shopify Customer Account OpenID Connect
+  authentication, and a Universal Commerce Protocol (UCP) MCP endpoint that lets AI
+  shopping agents search the catalog, build carts, apply discounts, and complete
+  buyer-approved checkouts. CandyClub was added to the API Evangelist network as a
+  500 Global portfolio company; this profile is enriched from its public storefront,
+  well-known discovery documents, and UCP/agent surface.
 url: https://raw.githubusercontent.com/api-evangelist/candyclub/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://candyclub.com/cdn/shop/files/cc_logo.webp?v=1767705737&width=300
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,10 +33,33 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-apis: []
+- Candy
+- Confectionery
+- Ecommerce
+- Subscription
+- Retail
+- Shopify
+- Agent Commerce
+- UCP
+apis:
+- name: CandyClub Agent Commerce (UCP)
+  description: >-
+    Agent-facing commerce surface for the CandyClub Shopify storefront: a Universal
+    Commerce Protocol (UCP) MCP endpoint plus read-only storefront browsing, governed
+    by an llms.txt agent guide and Shopify Customer Account OIDC. Checkout requires
+    explicit buyer approval.
+  humanURL: https://candyclub.com/llms.txt
+  baseURL: https://candyclub.com/api/ucp/mcp
+  properties:
+  - type: LLMsTxt
+    url: llms/candyclub-llms.txt
+  - type: MCPServer
+    url: mcp/candyclub-mcp.yml
+  - type: Authentication
+    url: authentication/candyclub-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +68,28 @@ maintainers:
 common:
 - type: Website
   url: https://candyclub.com
+- type: LLMsTxt
+  url: llms/candyclub-llms.txt
+- type: MCPServer
+  url: mcp/candyclub-mcp.yml
+- type: WellKnown
+  url: well-known/candyclub-well-known.yml
+- type: Authentication
+  url: authentication/candyclub-authentication.yml
+- type: OAuthScopes
+  url: scopes/candyclub-scopes.yml
+- type: Conventions
+  url: conventions/candyclub-conventions.yml
+- type: DomainSecurity
+  url: security/candyclub-domain-security.yml
+- type: Login
+  url: https://account.candyclub.com/authentication/oauth/authorize
+- type: TermsOfService
+  url: https://candyclub.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://candyclub.com/policies/privacy-policy
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,25 @@
+generated: '2026-07-18'
+method: searched
+source: https://candyclub.com/.well-known/
+host: https://candyclub.com
+notes: >-
+  candyclub.com is a Shopify-hosted storefront. The OIDC/OAuth authorization
+  server is Shopify Customer Accounts (issuer shopify.com/authentication/65295974459);
+  agent-commerce discovery is exposed via the Universal Commerce Protocol (UCP)
+  profile at /.well-known/ucp.
+documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: candyclub-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: candyclub-oauth-authorization-server.json
+  - path: /.well-known/ucp
+    status: 200
+    file: candyclub-ucp.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
