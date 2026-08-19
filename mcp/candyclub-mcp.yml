@@ -8,45 +8,50 @@ server:
   protocol: UCP
   ucp_version: '2026-04-08'
   ucp_supported_versions:
-    - '2026-04-08'
-    - '2026-01-23'
+  - '2026-04-08'
+  - '2026-01-23'
   transport: http
   url: https://candyclub.com/api/ucp/mcp
   method: POST
   content_type: application/json
   spec: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
-  notes: >-
-    Platform-provided Model Context Protocol endpoint for the CandyClub Shopify
-    storefront, implementing the Universal Commerce Protocol (UCP) shopping
-    service (service id dev.ucp.shopping). tools/list requires an agent profile
-    URI handshake (returns error invalid_profile_url without one), so the tool
-    list below is transcribed from the documented agent flow in /llms.txt and the
-    UCP shopping capability set, not from a live tools/list dump. Checkout requires
-    contemporaneous human buyer approval before payment.
+  notes: Platform-provided Model Context Protocol endpoint for the CandyClub Shopify storefront, implementing
+    the Universal Commerce Protocol (UCP) shopping service (service id dev.ucp.shopping). tools/list requires
+    an agent profile URI handshake (returns error invalid_profile_url without one), so the tool list below
+    is transcribed from the documented agent flow in /llms.txt and the UCP shopping capability set, not
+    from a live tools/list dump. Checkout requires contemporaneous human buyer approval before payment.
 capabilities:
-  - dev.ucp.shopping.catalog.search
-  - dev.ucp.shopping.catalog.lookup
-  - dev.ucp.shopping.cart
-  - dev.ucp.shopping.checkout
-  - dev.ucp.shopping.fulfillment
-  - dev.ucp.shopping.discount
-  - dev.ucp.shopping.order
+- dev.ucp.shopping.catalog.search
+- dev.ucp.shopping.catalog.lookup
+- dev.ucp.shopping.cart
+- dev.ucp.shopping.checkout
+- dev.ucp.shopping.fulfillment
+- dev.ucp.shopping.discount
+- dev.ucp.shopping.order
 payment_handlers:
-  - com.google.pay
-  - dev.shopify.card
+- com.google.pay
+- dev.shopify.card
 tools:
-  - name: search_catalog
-    description: Find products in the store matching a buyer's intent.
-    source: https://candyclub.com/llms.txt
-  - name: create_cart
-    description: Create a cart and add desired items.
-    source: https://candyclub.com/llms.txt
-  - name: create_checkout
-    description: Start the purchase flow for a cart.
-    source: https://candyclub.com/llms.txt
-  - name: update_checkout
-    description: Set shipping address and method on a checkout.
-    source: https://candyclub.com/llms.txt
-  - name: complete_checkout
-    description: Finalize the purchase. Buyer must explicitly approve payment.
-    source: https://candyclub.com/llms.txt
+- name: search_catalog
+  description: Find products in the store matching a buyer's intent.
+  source: https://candyclub.com/llms.txt
+- name: create_cart
+  description: Create a cart and add desired items.
+  source: https://candyclub.com/llms.txt
+- name: create_checkout
+  description: Start the purchase flow for a cart.
+  source: https://candyclub.com/llms.txt
+- name: update_checkout
+  description: Set shipping address and method on a checkout.
+  source: https://candyclub.com/llms.txt
+- name: complete_checkout
+  description: Finalize the purchase. Buyer must explicitly approve payment.
+  source: https://candyclub.com/llms.txt
+deployment:
+  mode: remote
+  endpoint: https://candyclub.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
